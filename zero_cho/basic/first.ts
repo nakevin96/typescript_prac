@@ -38,3 +38,10 @@ const obj: {
 
 const arr: string[] = ["123", "456"];
 const arr2: Array<number> = [1, 2, 3, 4];
+const arr3: [number, string, number] = [158, "ine", 1];
+
+// 타입 스크립트가 정확히 추론을 할 경우 타입을 지정할 필요가 없고
+// 타입 스크립트가 타입을 잘못 추론했을 경우에 타입을 지정해주면 된다.
+const only_true: true = true;
+
+const only_five: "5" = "5";
