@@ -178,3 +178,31 @@ const MammaliaFifthType = {
 const humanFifth = { type: MammaliaFifthType.HUMAN };
 const dogFifth = { type: MammaliaFifthType.DOG };
 const catFifth = { tpye: MammaliaFifthType.CAT };
+
+interface CatFifth {
+  meow: number;
+}
+
+interface DogFifth {
+  bow: number;
+}
+
+function catOrDogFifth(a: CatFifth | DogFifth): a is DogFifth {
+  // 타입 판별을 직접 함.
+  // 여기서는 강아지 임을 판단하는 코드
+  if ((a as CatFifth).meow) {
+    return false;
+  }
+  return true;
+}
+// 타입을 구분해주는 커스텀 함수를 직접 만들 수 있습니다.
+// 이전까지는 typeof instanceof in 등을 통해 구분했다면
+// 위의 catOfDogFifth와 같이 커스텀 타입가드를 만들 수 있습니다.
+const catFifth1: CatFifth | DogFifth = { meow: 3 };
+const dogFifth1: CatFifth | DogFifth = { bow: 4 };
+if (catOrDogFifth(dogFifth1)) {
+  console.log(dogFifth1.bow);
+}
+if ("meow" in catFifth1) {
+  console.log(catFifth1.meow);
+}
