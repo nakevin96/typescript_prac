@@ -74,3 +74,107 @@ forEachFifth([1, 2, 3], (el) => target.push(el));
 forEachFifth([1, 2, 3], (el) => {
   target.push(el);
 });
+
+// unknown과 any의 차이는 무엇일까요?
+// any의 경우 타입스크립트가 타입 체킹을 포기합니다.
+// 타입스크립트를 쓰는 의미가 없어집니다.
+// unknown을 쓸 경우 나중에 쓸 때 타입을 정의해서 쓰겠다는 의미로
+// 타입스크립트가 타입 체킹을 포기하지 않고 잘못 쓸 경우 에러를 띄워줍니다.
+// 잘 이해가 안간다면 try catch문의 error가 unkown타입인 것을 떠올려 봅시다.
+try {
+} catch (error) {
+  (error as Error).message;
+}
+
+// 타입 가드
+function numOrStrFifth(a: number | string) {
+  if (typeof a === "string") {
+    // a의 타입을 'string'으로 좁혀줌
+    a.split(",");
+  } else {
+    // string을 걸러냈기 때문에 여기 a는 number임.
+    a.toFixed(1);
+  }
+}
+numOrStrFifth("123");
+numOrStrFifth(1);
+
+function numOrNumArrayFifth(a: number | number[]) {
+  if (Array.isArray(a)) {
+    a.concat(40);
+  } else {
+    a.toFixed(3);
+  }
+}
+
+// class는 자체적으로 타입이 될 수 있습니다.
+
+class AClass {
+  aaa() {}
+}
+
+class BClass {
+  bbb() {}
+}
+
+function aOrBFifth(param: AClass | BClass) {
+  if (param instanceof AClass) {
+    param.aaa();
+  } else {
+    param.bbb();
+  }
+}
+
+// 이거 에러, class를 타입으로 썼을 때는
+// class그 자체가 아니라 instance를 받는 다는 의미
+// aOrBFifth(AClass);
+
+// 아래가 정상
+aOrBFifth(new AClass());
+
+type BFifth = {
+  type: "b";
+  bbb: string;
+};
+
+type CFifth = {
+  type: "c";
+  ccc: string;
+};
+
+type DFifth = {
+  type: "d";
+  ddd: string;
+};
+
+// 아래와 같이 속성으로 타입가드를 하면
+// 자동완성을 알아서 해줌을 확인할 수 있습니다.
+function typeCheckFifth(a: BFifth | CFifth | DFifth) {
+  if (a.type === "b") {
+    a.bbb;
+  } else if (a.type === "c") {
+    a.ccc;
+  } else {
+    a.ddd;
+  }
+}
+
+function typeCheckWithInFifth(a: BFifth | CFifth | DFifth) {
+  if ("bbb" in a) {
+    a.bbb;
+  } else if ("ddd" in a) {
+    a.ddd;
+  } else {
+    a.ccc;
+  }
+}
+
+const MammaliaFifthType = {
+  HUMAN: "human",
+  DOG: "dog",
+  CAT: "cat",
+} as const;
+
+const humanFifth = { type: MammaliaFifthType.HUMAN };
+const dogFifth = { type: MammaliaFifthType.DOG };
+const catFifth = { tpye: MammaliaFifthType.CAT };
