@@ -16,3 +16,46 @@ if (z) {
   // 여기 나오는 z의 타입 {}이 즉 객체가 아니라 null과 undefined를 제외한 모든 type이라고 생각하시면 됩니다.
   z;
 }
+
+interface ASixth {
+  readonly a: string;
+  b: string;
+}
+const aaaa: ASixth = {
+  a: "hello",
+  b: "world",
+};
+
+// readonly라 못바꿈
+//aaaa.a = 'hi';
+
+// index signature
+type BSixth = {
+  [key: string]: string;
+};
+
+const bbbb: BSixth = {
+  hi: "never",
+  ine: "hi",
+};
+
+interface CSixth {
+  [key: string]: string;
+}
+
+const cccc: CSixth = {
+  naver: "is best",
+};
+
+// mapped types
+type DTmpSixth = "Human" | "Animal";
+
+type DSixth = {
+  [key in DTmpSixth]: string;
+};
+
+const dddd: DSixth = {
+  Human: "human",
+  Animal: "animal",
+  //Mammal : 'mammal',
+};
