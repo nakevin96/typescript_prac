@@ -87,7 +87,68 @@ type VariantB = {
   b: number;
 };
 
-declare function fn2(arg: VariantA | VariantB): void;
+declare function variant_test_func(arg: VariantA | VariantB): void;
 
 const input = { a: "foo", b: 123 };
-fn2(input);
+variant_test_func(input);
+
+// 하지만 위 코드는 에러를 발생시키지 않습니다.
+// duck typing에 의해 input이 VariantA에도 속하고 VariantB에도 속하기 때문이죠.
+// 이럴 떄 요구조건 충족을 위해 never를 활용할 수 있습니다.
+
+type VariantA2 = {
+  a: string;
+  b?: never;
+};
+
+type VariantB2 = {
+  b: number;
+  a?: never;
+};
+
+declare function variant_test_func2(arg: VariantA2 | VariantB2): void;
+
+const input2 = { a: "foo", b: 123 };
+// Argument of type '{a: string; b: number; }' is not assignable to parameter of type 'VariantA2 | VariantB2'
+// variant_test_func2(input2);
+
+// 또한 의도하지 않은 API 사용을 방지 합니다.
+
+type Read = {};
+type Write = {};
+
+declare const toWrite: Write;
+
+declare class MyCache<T, R> {
+  put(val: T): boolean;
+  get(): R;
+}
+
+const cache = new MyCache<Write, Read>();
+cache.put(toWrite); // 허용
+
+// get 메소드를 통해서만 데이터를 읽을 수 있는 읽기 전용 캐시를 원한다고 해봅시다
+// put 메소드 인수에 never를 전달해 이를 달성할 수 있습니다.
+
+declare class ReadOnlyCache<R> extends MyCache<never, R> {}
+
+const readOnlyCache = new ReadOnlyCache<Read>();
+//readOnlyCache.put(toWrite);
+
+// 도달 불가능한 분기를 나타내는 것 외에도
+// never타입은 조건부 타입에서 원하지 않는 타입을 필터링 할 수 있습니다.
+
+type NeverFoo = {
+  name: "foo";
+  id: number;
+};
+
+type NeverBar = {
+  name: "bar";
+  id: number;
+};
+
+type NeverAll = NeverFoo | NeverBar;
+
+type ExtractTypeByName<T, G> = T extends { name: G } ? T : never;
+type ExtractedType = ExtractTypeByName<NeverAll, "foo">; // result type -> foo
