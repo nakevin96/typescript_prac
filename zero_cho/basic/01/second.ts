@@ -65,16 +65,16 @@ function unknownColor(x: never): never {
 
 type Color = "red" | "blue" | "purple";
 
-function getColorName(c: Color): string {
-  switch (c) {
-    case "red":
-      return "is red";
-    case "blue":
-      return "is blue";
-    default:
-      return unknownColor(c);
-  }
-}
+// function getColorName(c: Color): string {
+//   switch (c) {
+//     case "red":
+//       return "is red";
+//     case "blue":
+//       return "is blue";
+//     default:
+//       return unknownColor(c);
+//   }
+// }
 
 // 이번에는 VariantA 혹은 VariantB 타입의 매개변수를 받는 함수가 있다고 합시다.
 // 사용자는 두 타입의 모든 속성을 모두 포함하는 하위 타입을 전달하면 안됩니다.
