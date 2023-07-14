@@ -45,3 +45,4 @@ const arr3: [number, string, number] = [158, "ine", 1];
 const only_true: true = true;
 
 const only_five: "5" = "5";
+export {};

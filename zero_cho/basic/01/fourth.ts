@@ -61,3 +61,4 @@ type B = string;
 type A_OBJ = { name: string };
 type B_OBJ = { age: number };
 type C_OBJ = { name: string; age: number };
+export {};

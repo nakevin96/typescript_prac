@@ -59,3 +59,5 @@ const dddd: DSixth = {
   Animal: "animal",
   //Mammal : 'mammal',
 };
+
+export {};

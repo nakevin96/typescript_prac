@@ -206,3 +206,5 @@ if (catOrDogFifth(dogFifth1)) {
 if ("meow" in catFifth1) {
   console.log(catFifth1.meow);
 }
+
+export {};

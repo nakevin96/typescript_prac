@@ -152,3 +152,5 @@ type NeverAll = NeverFoo | NeverBar;
 
 type ExtractTypeByName<T, G> = T extends { name: G } ? T : never;
 type ExtractedType = ExtractTypeByName<NeverAll, "foo">; // result type -> foo
+
+export {};
