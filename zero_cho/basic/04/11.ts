@@ -65,3 +65,18 @@ const customPickYoon: CustomPick<Profile, "name" | "age"> = {
   name: "yoon",
   age: 28,
 };
+
+// Omit은 타입에서 특정 요소만 제거합니다. 이것도 Custom으로 만들어 봅시다.
+const omitYoon: Omit<Profile, "married"> = {
+  name: "yoon",
+  age: 28,
+};
+
+// type Exclude<T, U> = T extends U ? never : T;
+// X extends keyof any는 X가 key가 될 수 있는 string, number, symbol만 들어올 수 있게 하겠다는 의미
+type CustomOmit<T, X extends keyof any> = Pick<T, Exclude<keyof T, X>>;
+
+const customOmitYoon: CustomOmit<Profile, "married"> = {
+  name: "yoon",
+  age: 28,
+};
