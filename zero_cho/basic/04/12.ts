@@ -47,7 +47,7 @@ const customReadOnlyYoon: CustomReadonly<CustomRequired<Profile>> = {
 
 //customReadOnlyYoon['name'] = 'hi';
 
-// 특정 타입에서 null, undefined를 제거하고 싶을 때
+// 특정 키에서 null, undefined를 제거하고 싶을 때
 type ComplecateType = number | string | boolean | symbol | undefined | null;
 type NonNullType = NonNullable<ComplecateType>;
 
