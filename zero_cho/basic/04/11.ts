@@ -24,7 +24,7 @@ declare const axios: Axios;
 interface Profile {
   name: string;
   age: number;
-  marreid: boolean;
+  married: boolean;
 }
 
 const yoon = {
@@ -49,3 +49,19 @@ const newYoon: CustomPartial<Profile> = {
 // type Partial<T> = {
 //     [P in keyof T]?: T[P];
 // };
+
+// 이번에는 Pick을 알아봅시다.
+// Pick은 타입에서 일부만 가져옵니다. 이걸 Custom으로 바꿔봅시다.
+const pickYoon: Pick<Profile, "name" | "age"> = {
+  name: "yoon",
+  age: 28,
+};
+
+type CustomPick<T, K extends keyof T> = {
+  [P in K]: T[P];
+};
+
+const customPickYoon: CustomPick<Profile, "name" | "age"> = {
+  name: "yoon",
+  age: 28,
+};
