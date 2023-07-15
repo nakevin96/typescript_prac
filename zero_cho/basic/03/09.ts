@@ -46,3 +46,4 @@ const cFilterResult2 = c.filter((v): v is number => typeof v === "number");
 
 // 정답:     filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];
 // filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[];
+export {};
