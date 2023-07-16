@@ -27,4 +27,67 @@ Promise.all([p1, p2, p3]).then((result) => {
   console.log(result);
 });
 
+// bind
+// bind<T>(this: T, thisArg: ThisParameterType<T>): OmitThisParameter<T>;
+// bind<T, A extends any[], B extends any[], R>(this: (this: T, ...args: [...A, ...B]) => R, thisArg: T, ...args: A): (...args: B) => R;
+
+// type ThisParameterType<T> = T extends (this: infer U, ...args: never) => any ? U : unknown;
+
+// type OmitThisParameter<T> = unknown extends ThisParameterType<T> ? T : T extends (...args: infer A) => infer R ? (...args: A) => R : T;
+function bindCheck(
+  a: number,
+  b: number,
+  c: number,
+  d: number,
+  e: number,
+  f: number,
+  g: number
+) {
+  return a + b + c + d + e + f + g;
+}
+
+const test1 = bindCheck.bind(null);
+test1(1, 2, 3, 4, 5, 6, 7);
+const test2 = bindCheck.bind(null, 1);
+test2(2, 3, 4, 5, 6, 7);
+const test3 = bindCheck.bind(null, 1, 2);
+test3(3, 4, 5, 6, 7);
+const test4 = bindCheck.bind(null, 1, 2, 3);
+test4(4, 5, 6, 7);
+const test5 = bindCheck.bind(null, 1, 2, 3, 4);
+test5(5, 6, 7);
+const test6 = bindCheck.bind(null, 1, 2, 3, 4, 5);
+test6(6, 7);
+const test7 = bindCheck.bind(null, 1, 2, 3, 4, 5, 6);
+test7(7);
+const test8 = bindCheck.bind(null, 1, 2, 3, 4, 5, 6, 7);
+test8();
+
+// flat
+const a = [1, 2, 3, [1, 2], [[1], [2]]];
+const flatA = a.flat();
+const flatA2 = a.flat(2);
+const flatB = [1, 2, 3, [1, 2]].flat();
+// flat은 차원을 어떻게 알고 줄여줄 수 있을까요?
+
+// flat<A, D extends number = 1>(
+//     this: A,
+//     depth?: D
+// ): FlatArray<A, D>[]
+
+// type FlatArray<Arr, Depth extends number> = {
+//     "done": Arr,
+//     "recur": Arr extends ReadonlyArray<infer InnerArr>
+//         ? FlatArray<InnerArr, [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20][Depth]>
+//         : Arr
+// }[Depth extends -1 ? "done" : "recur"];
+
+// 위에서 depth를 낮추는 과정이 진짜 쇼킹한게 배열을 만들어두고 index로 접근하며 -1한 값을 가져오는 것 입니다.
+
+type directSelect = {
+  name: string;
+  age: number;
+  isMarried: boolean;
+}[1 extends number ? "age" : "name"];
+
 export {};
